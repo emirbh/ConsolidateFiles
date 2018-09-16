@@ -48,11 +48,10 @@ public class Main {
             BasicFileAttributes attr = Files.readAttributes(sourcePath, BasicFileAttributes.class);
             String              date = dateFormat.format(attr.creationTime().toMillis());
             counts.putIfAbsent(date, 0);
-//            FileUtils.moveFile(sourcePath.toFile(),
             FileUtils.copyFile(sourcePath.toFile(),
                     new File(outputFolder+"/" +
                             date + "_" + String.valueOf(counts.put(date, counts.get(date)+1)) + "-" + sourcePath.getFileName()));
-            System.out.println(date + "->" + sourcePath.toFile().toString());
+            System.out.println(sourcePath.toFile().toString());
         } catch(IOException e) {
             System.out.println(e);
         }
@@ -60,13 +59,12 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        final String     imageRegex = "([^\\s]+(\\.(?i)(jpg|png|gif|bmp))$)";
+        final String     imageRegex = "([^\\s]+(\\.(?i)(jpg|jpeg|png|gif|bmp))$)";
         final DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
         final Pattern    matchEntry = Pattern.compile(CliArguments.getInstance(args).getFilter());
         HashMap<String, Integer> counts = new HashMap<String, Integer>();
         try {
             getFiles(Paths.get(CliArguments.getInstance(args).getInputFolder()))
-                    .flatMap(path -> path.toFile().isDirectory() ? getFiles(path) : singletonList(path).stream())
                     .filter(item -> matchEntry.matcher(item.toString()).matches())
                     .collect(Collectors.groupingBy(Main::getUniqueContent))
                     .forEach((uid, items) ->
