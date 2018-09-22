@@ -2,8 +2,6 @@
   <library name="commons-cli-1.4">
     <CLASSES>
       <root url="jar://$USER_HOME$/Bin/Libraries/commons-cli-1.4/commons-cli-1.4.jar!/" />
-      <root url="jar://$USER_HOME$/Bin/Libraries/commons-codec-1.11/commons-codec-1.11.jar!/" />
-      <root url="jar://$USER_HOME$/Bin/Libraries/commons-io-2.6/commons-io-2.6.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
